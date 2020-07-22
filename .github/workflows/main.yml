@@ -24,8 +24,8 @@ jobs:
         dotnet-version: '3.1.301'
     - name: .Net build and publish
     - run: |
-      dotnet build --configuration release
-      dotnet publish -c release -o '${{ env.AZURE_WEBAPP_PATH }}/myapp'
+        dotnet build --configuration release
+        dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PATH }}/myapp'
     - name: Deploy to App Service
     - uses: azure/webapps-deploy@v2
     with:
