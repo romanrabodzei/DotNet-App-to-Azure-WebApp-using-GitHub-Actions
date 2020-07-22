@@ -11,29 +11,30 @@ env:
     DOTNET_VERSION: '3.1.301'
 
 jobs:
-    build-and-deploy:
-        runs-on: ubuntu-latest
-        steps:
+build-and-deploy:
+runs-on: ubuntu-latest
 
-            - uses: actions/checkout@master
+steps:
 
-            - name: Login via Azure CLI
-            - uses: azure/login@v1
-            with:
-                creds: ${{ secrets.AZURE_CREDENTIALS }}
+- uses: actions/checkout@master
 
-            - name: Setup .net core
-            - uses: actions/setup-dotnet@v1
-            with:
-                dotnet-version: {{ env.DOTNET_VERSION }}
+- name: Login via Azure CLI
+- uses: azure/login@v1
+with:
+    creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-            - name: .Net build and publish
-            - run: |
-                dotnet build --configuration release
-                dotnet publish -c release -o '${{ env.AZURE_WEBAPP_PATH }}/myapp'
+- name: Setup .net core
+- uses: actions/setup-dotnet@v1
+with:
+    dotnet-version: {{ env.DOTNET_VERSION }}
 
-            - name: Deploy to App Service
-            - uses: azure/webapps-deploy@v2
-            with:
-                app-name: ${{ env.AZURE_WEBAPP_NAME }}
-                package: '${{ env.AZURE_WEBAPP_PATH }}/myapp'
+- name: .Net build and publish
+- run: |
+    dotnet build --configuration release
+    dotnet publish -c release -o '${{ env.AZURE_WEBAPP_PATH }}/myapp'
+
+- name: Deploy to App Service
+- uses: azure/webapps-deploy@v2
+with:
+    app-name: ${{ env.AZURE_WEBAPP_NAME }}
+    package: '${{ env.AZURE_WEBAPP_PATH }}/myapp'
