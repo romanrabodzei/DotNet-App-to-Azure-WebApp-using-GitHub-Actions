@@ -3,6 +3,8 @@ name: Deploy ASP.NET Core to Azure Web Application
 on:
   push:
     branches: [ master ]
+    paths-ignore:
+      - README.md
 
 env:
   AZURE_WEBAPP_NAME: WebApp1794
